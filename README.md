@@ -4,15 +4,15 @@ A quick internal tool to log and visualize the emotional vibe of a support ticke
 
 ## Features
 
-- 📌 Log mood using emojis (`🎉 😊 😐 😕 😠`)
-- 🗒 Optional note field for context
-- 📊 Auto-updating bar chart of today's mood counts
-- 📅 Date filter to view mood trends historically
-- 📈 Daily average and 7-day mood comparison
+- Log mood using emojis (`🎉 😊 😐 😕 😠`)
+- Optional note field for context
+- Auto-updating bar chart of today's mood counts
+- Date filter to view mood trends historically
+- Daily average and 7-day mood comparison
 
 ## Tech Stack
 
-- Python + [Streamlit](https://streamlit.io)
+- Python + Streamlit
 - Google Sheets (as backend database)
 - gspread + OAuth2 for integration
 - Plotly for charts
