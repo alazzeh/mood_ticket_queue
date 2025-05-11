@@ -18,8 +18,8 @@ sheet = client.open("mood_of_the_ticket_queue").sheet1
 data = sheet.get_all_records()
 df = pd.DataFrame(data)
 df['score'] = pd.to_numeric(df['score'], errors='coerce')
-df['Date_time'] = pd.to_datetime(df['Date_time'])
-df = df.set_index('Date_time')
+df['date_time'] = pd.to_datetime(df['date_time'])
+df = df.set_index('date_time')
 
 ## Creating a scoring map for the Mood (Emojis)
 mood_score_map = {
@@ -58,7 +58,7 @@ with st.form("mood_logger"):
     note = st.text_input("Optional note").strip()
     submitted = st.form_submit_button("Log Mood")
     if submitted:
-        Date_time = datetime.Date_time().strftime("%Y-%m-%d %H:%M:%S")
+        date_time = datetime.date_time().strftime("%Y-%m-%d %H:%M:%S")
         score = mood_score_map[mood]
         sheet.append_row([date_time, mood, note, score])
         st.success(f"✅ Mood '{mood}' logged!")
@@ -73,7 +73,7 @@ with a[0]:
 b,c = st.columns(2)
 
 with b:
-    selected_date = st.date_input("Filter by date", pd.Timestamp.Date_time().date())
+    selected_date = st.date_input("Filter by date", pd.Timestamp.date_time().date())
     filtered_df = df[df.index.normalize() == pd.to_datetime(selected_date)]
     filtered_median = filtered_df['score'].median()
     median_emoji = score_to_emoji.get(int(round(filtered_median)), "❓") if not pd.isna(filtered_median) else "❓"
