@@ -11,7 +11,8 @@ scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/au
 creds_dict = json.loads(st.secrets["GOOGLE_SERVICE_ACCOUNT_JSON"])
 creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
 client = gspread.authorize(creds)
-sheet = client.open("mood_of_the_ticket_queue").sheet1
+# sheet = client.open("mood_of_the_ticket_queue").sheet1
+sheet = client.open_by_key("mood_of_the_ticket_queue").sheet1
 
 ## Loading the data
 
