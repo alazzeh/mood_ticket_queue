@@ -66,12 +66,10 @@ with st.form("mood_logger"):
 
 # Vibe Metric & Date Filter + Bar Chart
 # ------------------------
-a = st.columns(1)
-with a[0]:
+
+a,b = st.columns(2)
+with a:
   st.metric("Today's Vibe", f"{round(today_avg, 2)} {'/ 5'} {emoji}", f"{round(today_avg - rolling_7d_avg, 2)} vs 7d avg")
-
-b,c = st.columns(2)
-
 with b:
     selected_date = st.date_input("Filter by date", pd.Timestamp.now().date())
     filtered_df = df[df.index.normalize() == pd.to_datetime(selected_date)]
@@ -80,17 +78,17 @@ with b:
     
     st.write(f"**Overall mood on {selected_date}:** {median_emoji}")
 
-with c:
-  # Mood bar chart based on selected date
-  mood_counts = filtered_df['score'].map(score_to_emoji).value_counts()
-  all_moods = ["😠", "😕", "😐", "😊", "🎉"]
-  mood_counts = mood_counts.reindex(all_moods).fillna(0).astype(int)
-  chart_data = pd.DataFrame({
+# Mood bar chart based on selected date
+mood_counts = filtered_df['score'].map(score_to_emoji).value_counts()
+all_moods = ["😠", "😕", "😐", "😊", "🎉"]
+mood_counts = mood_counts.reindex(all_moods).fillna(0).astype(int)
+
+chart_data = pd.DataFrame({
     'Mood': mood_counts.index,
     'Count': mood_counts.values
-  }).set_index('Mood')
-  st.bar_chart(chart_data)
+}).set_index('Mood')
 
+st.bar_chart(chart_data)
 
 
 
