@@ -1,25 +1,28 @@
-# 📦 Streamlit App Starter Kit 
-```
-⬆️ (Replace above with your app's name)
-```
+# 📝 Mood of the Ticket Queue
 
-Description of the app ...
+A quick internal tool to log and visualize the emotional vibe of a support ticket queue throughout the day. Built for operational awareness and team sentiment tracking.
 
-## Demo App
+## Features
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://app-starter-kit.streamlit.app/)
+- 📌 Log mood using emojis (`🎉 😊 😐 😕 😠`)
+- 🗒 Optional note field for context
+- 📊 Auto-updating bar chart of today's mood counts
+- 📅 Date filter to view mood trends historically
+- 📈 Daily average and 7-day mood comparison
 
-## GitHub Codespaces
+## Tech Stack
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/streamlit/app-starter-kit?quickstart=1)
+- Python + [Streamlit](https://streamlit.io)
+- Google Sheets (as backend database)
+- gspread + OAuth2 for integration
+- Plotly for charts
 
-## Section Heading
+## Setup
 
-This is filler text, please replace this with text for this section.
+1. Clone this repo
+2. Add your Google service account key to `.streamlit/secrets.toml`:
 
-## Further Reading
+```toml
+[GOOGLE_SERVICE_ACCOUNT_JSON]
+# Paste your JSON key here as a multiline string
 
-This is filler text, please replace this with a explanatory text about further relevant resources for this repo
-- Resource 1
-- Resource 2
-- Resource 3
