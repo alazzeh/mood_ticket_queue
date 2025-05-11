@@ -58,7 +58,7 @@ with st.form("mood_logger"):
     note = st.text_input("Optional note").strip()
     submitted = st.form_submit_button("Log Mood")
     if submitted:
-        date_time = datetime.date_time().strftime("%Y-%m-%d %H:%M:%S")
+        date_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         score = mood_score_map[mood]
         sheet.append_row([date_time, mood, note, score])
         st.success(f"✅ Mood '{mood}' logged!")
