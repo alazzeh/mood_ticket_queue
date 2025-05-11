@@ -73,7 +73,7 @@ with a[0]:
 b,c = st.columns(2)
 
 with b:
-    selected_date = st.date_input("Filter by date", pd.Timestamp.date_time().date())
+    selected_date = st.date_input("Filter by date", pd.Timestamp.now().date())
     filtered_df = df[df.index.normalize() == pd.to_datetime(selected_date)]
     filtered_median = filtered_df['score'].median()
     median_emoji = score_to_emoji.get(int(round(filtered_median)), "❓") if not pd.isna(filtered_median) else "❓"
