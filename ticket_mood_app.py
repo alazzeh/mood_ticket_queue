@@ -13,13 +13,6 @@ creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
 client = gspread.authorize(creds)
 sheet = client.open("mood_of_the_ticket_queue").sheet1
 
-## Loading the data
-
-data = sheet.get_all_records()
-df = pd.DataFrame(data)
-df['score'] = pd.to_numeric(df['score'], errors='coerce')
-df['date_time'] = pd.to_datetime(df['date_time'])
-df = df.set_index('date_time')
 
 ## Creating a scoring map for the Mood (Emojis)
 mood_score_map = {
@@ -31,6 +24,27 @@ mood_score_map = {
 }
 score_to_emoji = {v: k for k, v in mood_score_map.items()}
 
+# Designing the log
+
+st.title('😊 Ticket Queue Mood Check')
+with st.form("mood_logger"):
+    mood = st.radio("How does the queue feel?", ["😊", "😠", "😕", "🎉", "😐"])
+    st.caption("🎉: joyful | 😊: happy | 😐: neutral | 😕: sad | 😠: frustrated")
+    note = st.text_input("Optional note").strip()
+    submitted = st.form_submit_button("Log Mood")
+    if submitted:
+        date_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        score = mood_score_map[mood]
+        sheet.append_row([date_time, mood, note, score])
+        st.success(f"✅ Mood '{mood}' logged!")
+        
+## Loading the data
+
+data = sheet.get_all_records()
+df = pd.DataFrame(data)
+df['score'] = pd.to_numeric(df['score'], errors='coerce')
+df['date_time'] = pd.to_datetime(df['date_time'])
+df = df.set_index('date_time')
 
 ## Computing today's average and median score (Mood) 
 
@@ -50,19 +64,7 @@ emoji = score_to_emoji.get(score, "❓")
 
 
 
-# Designing the webapp
 
-st.title('😊 Ticket Queue Mood Check')
-with st.form("mood_logger"):
-    mood = st.radio("How does the queue feel?", ["😊", "😠", "😕", "🎉", "😐"])
-    st.caption("🎉: joyful | 😊: happy | 😐: neutral | 😕: sad | 😠: frustrated")
-    note = st.text_input("Optional note").strip()
-    submitted = st.form_submit_button("Log Mood")
-    if submitted:
-        date_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        score = mood_score_map[mood]
-        sheet.append_row([date_time, mood, note, score])
-        st.success(f"✅ Mood '{mood}' logged!")
 
 
 # Vibe Metric & Date Filter + Bar Chart
