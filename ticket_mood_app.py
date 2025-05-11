@@ -41,7 +41,9 @@ today_avg = today_avg if not pd.isna(today_avg) else 0
 today_median = df.loc[df.index.normalize() == today, 'score'].median()
 today_median = today_avg if not pd.isna(today_median) else 0
 
-last_7_days = df[df.index >= pd.Timestamp.now() - pd.Timedelta(days=7)]
+today = pd.Timestamp.now().normalize()
+seven_days_ago = today - pd.Timedelta(days=7)
+last_7_days = df[(df.index >= seven_days_ago) & (df.index <= today)]
 rolling_7d_avg = last_7_days['score'].mean()
 
 score = math.ceil(today_avg)
