@@ -62,13 +62,7 @@ rolling_7d_avg = last_7_days['score'].mean()
 score = math.ceil(today_avg)
 emoji = score_to_emoji.get(score, "❓")
 
-
-
-
-
-
 # Vibe Metric & Date Filter + Bar Chart
-# ------------------------
 
 a,b = st.columns(2)
 with a:
